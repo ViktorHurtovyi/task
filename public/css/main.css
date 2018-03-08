@@ -1,0 +1,54 @@
+html{
+    margin: 2%;
+}
+div{
+    display: none;
+}
+button{
+    width: 20%;
+}
+TABLE {
+    margin-top: 2%;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+}
+TH, TD {
+    border: 2px solid black;
+    padding: 4px;
+}
+TH {
+    background: #ff5f19;
+    height: 40px;
+    vertical-align: bottom;
+    padding: 0;
+}
+a:link {
+    color: #ff5f19;
+}
+
+/* visited link */
+a:visited {
+    color: #ff5f19;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}
+
+/* selected link */
+a:active {
+    color: blue;
+}
+button{
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid #ff5f19;
+}
