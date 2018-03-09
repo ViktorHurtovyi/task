@@ -11,9 +11,9 @@
             <p>Введите логин: <br><input type="text" name="login"></p>
             <p>Введите пароль: <br><input type="text" name="password"></p>
             <p>Текст email: <br><input type="email" name="email"></p>
-
             <button type="submit">Добавить</button>
         </form>
     </main>
-
-@stop()
+@stop
+@section('js')
+@stop

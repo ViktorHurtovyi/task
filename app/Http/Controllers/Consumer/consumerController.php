@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Consumer;
+use App\Http\Requests\ConsumerEditRequest;
+use App\Http\Requests\ConsumerRequest;
 use App\Model\Consumer;
 use App\Model\Group;
 use Illuminate\Http\Request;
@@ -12,11 +14,25 @@ class consumerController extends Controller
     {
         $ObjConsumer = new Consumer();
         $consumer = $ObjConsumer->paginate(5);
+        return view('consumer.index', ['consumers' => $consumer]);
+    }
+    public function indexLogin()
+    {
+        $ObjConsumer = new Consumer();
         $consumerLogin = $ObjConsumer->orderBy('login')->paginate(5);
+        return view('consumer.indexLogin', ['consumerLogin'=>$consumerLogin]);
+    }
+    public function indexEmail()
+    {
+        $ObjConsumer = new Consumer();
         $consumerEmail = $ObjConsumer->orderBy('email')->paginate(5);
+        return view('consumer.indexEmail', ['consumerEmail'=>$consumerEmail]);
+    }
+    public function indexGroup()
+    {
+        $ObjConsumer = new Consumer();
         $consumerGroup = $ObjConsumer->orderBy('groupId')->paginate(5);
-        return view('consumer.index', ['consumers' => $consumer, 'consumerLogin'=>$consumerLogin,
-            'consumerEmail'=>$consumerEmail, 'consumerGroup'=>$consumerGroup]);
+        return view('consumer.indexGroup', ['consumerGroup'=>$consumerGroup]);
     }
     public function addConsumer()
     {
@@ -26,7 +42,7 @@ class consumerController extends Controller
         return view('consumer.add', ['group' => $group]);
     }
 
-    public function addrequestConsumer(Request $request)
+    public function addrequestConsumer(ConsumerRequest $request)
     {
         $ObjConsumer = new Consumer();
         $password = md5($request->input('password'));
@@ -48,16 +64,14 @@ class consumerController extends Controller
         $group = $objGroup->get();
         return view('consumer.edit', ['consumer'=>$consumer, 'group'=>$group]);
     }
-    public function editRequestConsumer(Request $request, $consumerId){
+    public function editRequestConsumer(ConsumerEditRequest $request, $consumerId){
         try {
             $ObjConsumer = Consumer::find($consumerId);
             if(!$ObjConsumer){
                 abort(404);
             }
-            $password = md5($request->input('password'));
             $ObjConsumer->groupId = $request->get('groupId');
             $ObjConsumer->login = $request->input('login');
-            $ObjConsumer->password = $password;
             $ObjConsumer->email = $request->input('email');
             if ($ObjConsumer->save()) {
                 return redirect()->route('consumer')->with('success');

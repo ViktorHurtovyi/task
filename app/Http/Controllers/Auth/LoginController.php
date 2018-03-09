@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/consumer';
 
     /**
      * Create a new controller instance.
@@ -35,5 +39,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    public function login(Request $request)
+    {
+
+        $password = $request->input('password');
+            $this->validate($request, [
+                'password' => 'required'
+            ]);
+            if (Auth::attempt(['password' => $password])) {
+                return redirect(route('consumerLogin'));
+            }
+            return back();
     }
 }
